@@ -1,0 +1,41 @@
+{
+  "name": "js-util",
+  "version": "1.0.0",
+  "description": "js工具类",
+  "type": "module",
+  "private": false,
+  "files": [
+    "examples",
+    "dist",
+    "src",
+    "test"
+  ],
+  "scripts": {
+    "test": "mocha --recursive",
+    "examples": "open ./examples/index.html",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peacetrue/js-util.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peacetrue/js-util/issues"
+  },
+  "homepage": "https://github.com/peacetrue/js-util#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4"
+  },
+  "dependencies": {
+    "clean-webpack-plugin": "^3.0.0"
+  }
+}

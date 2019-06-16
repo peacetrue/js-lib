@@ -1,0 +1,114 @@
+= JS类库
+peacetrue
+v1.0, 2019-06-13: SNAPSHOT
+:doctype: docbook
+:toc: left
+:numbered:
+
+文档待完善
+//TODO 文档待完善
+
+== 前言
+.参考
+* https://www.lodashjs.com/
+* http://es6.ruanyifeng.com/
+* https://webpack.js.org/guides/output-management/
+* https://webpack.js.org/configuration/devtool/
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+
+== 疑问
+=== 如何输出源码和压缩文件
+开发模式下生成源码，生产环境下生成压缩代码
+
+=== umd
+生成的lib导出都是一个Module，module.default才是最终的内容，如何直接导出内容？
+
+=== 如何排除内部模块引用
+
+=== filename函数的入参结构
+[source%nowrap,javascript]
+----
+ { noChunkHash: false,
+     contentHashType: 'javascript',
+     chunk:
+      Chunk {
+        id: 2,
+        ids: [Array],
+        debugId: 1001,
+        name: 'PropertyPath',
+        preventIntegration: false,
+        entryModule: [NormalModule],
+        _modules: [SortableSet],
+        filenameTemplate: undefined,
+        _groups: [SortableSet],
+        files: [],
+        rendered: false,
+        hash: '455d3207fbfe2eaa2be68329f6048129',
+        contentHash: [Object],
+        renderedHash: '455d3207fbfe2eaa2be6',
+        chunkReason: undefined,
+        extraAsync: false,
+        removedModules: undefined },
+     hash: 'b0a04b840b2fdf82db58' }
+}
+----
+
+=== externals参数结构
+----
+arguments: [Arguments] {
+  '0': '/Users/xiayx/Documents/Projects/js-util',
+  '1': './src/core.js',
+  '2': [Function] }
+arguments: [Arguments] {
+  '0': '/Users/xiayx/Documents/Projects/js-util',
+  '1': './src/property-path.js',
+  '2': [Function] }
+arguments: [Arguments] {
+  '0': '/Users/xiayx/Documents/Projects/js-util',
+  '1': './src/object.js',
+  '2': [Function] }
+arguments: [Arguments] {
+  '0': '/Users/xiayx/Documents/Projects/js-util/src',
+  '1': './core',
+  '2': [Function] }
+arguments: [Arguments] {
+  '0': '/Users/xiayx/Documents/Projects/js-util/src',
+  '1': './property-path',
+  '2': [Function] }
+
+----
+
+== Core
+=== isPrimitiveOrWrapper
+是否原始类型或其封装类型。
+原始类型包括``boolean``, ``number``, ``string``, ``function``，
+对应的封装类型为``Boolean``, ``Number``, ``String``, ``Function``。
+
+.示例
+----
+
+----
+
+== PropertyPath
+嵌套对象中从根属性到叶子属性组成的路径。
+
+例如：
+[source%nowrap,javascript]
+----
+let demo = {
+    undefined: undefined,
+    null: null,
+    boolean: true,
+    number: 1,
+    string: "string",
+    function: function () {},
+    array: [1, 'string', {name: 'hi array'}],
+    object: {name: 'hi object'},
+    date: new Date(),
+}
+----
+* array[3].name : 'hi array'
+* object.name : 'hi object'
+
+== Object
+
