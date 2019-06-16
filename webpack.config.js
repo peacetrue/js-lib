@@ -4,12 +4,13 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    // mode: 'production',
     entry: {
         'Core': './src/core.js',
         'PropertyPath': './src/property-path.js',
         'Object': './src/object.js',
     },
-    // devtool: 'inline-source-map',
+    devtool: 'inline-source-map',
     plugins: [
         new CleanWebpackPlugin(),
     ],
@@ -24,13 +25,19 @@ module.exports = {
         libraryTarget: 'umd',
         globalObject: 'this',
     },
-    // externals: function (context, request, callback) {
-    //     console.info('arguments:', arguments);
-    //     if (/^yourregex$/.test(request)) {
-    //         return callback(null, 'commonjs ' + request);
-    //     }
-    //     callback();
-    // },
-    externals: ['./core', './property-path']
+    externals: {
+        './core': {
+            commonjs: './core',
+            commonjs2: './core',
+            amd: './core',
+            root: 'Peace.Core'
+        },
+        './property-path': {
+            commonjs: './property-path',
+            commonjs2: './property-path',
+            amd: './property-path',
+            root: 'Peace.PropertyPath'
+        }
+    }
 
 };
