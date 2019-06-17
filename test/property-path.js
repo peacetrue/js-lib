@@ -26,5 +26,13 @@ describe('PropertyPath.setValue', function () {
         let user = {};
         new PropertyPath('roles', 0, 'name').setValue(user, 'admin');
         expect(user.roles[0].name).to.equal('admin');
+        new PropertyPath('roles', 0, 'remark').setValue(user, 'admin');
+        expect(user.roles[0].remark).to.equal('admin');
     });
+
+    it('single value', () => {
+        let user = {};
+        new PropertyPath('id').setValue(user, 'admin');
+        expect(user.id).to.equal('admin');
+    })
 });

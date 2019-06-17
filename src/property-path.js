@@ -44,9 +44,10 @@ class PropertyPath {
             //如果是叶子节点直接设置值
             if (this.nodes.length === index + 1) {
                 object[node] = value;
-            } else if (!object[node]) {
+            } else {
                 //如果途经空对象，初始化一个对象
-                object = object[node] = typeof this.nodes[index + 1] === 'number' ? [] : {};
+                if (!object[node]) object[node] = typeof this.nodes[index + 1] === 'number' ? [] : {};
+                object = object[node];
             }
         });
     }
