@@ -8,9 +8,8 @@ let Rules = {
             return rule.requires.filter(name => !Core.isNullOrUndefined(value[name])).length > 0;
         },
         depend(rule, value, callback, source, options) {
-            let dependValue = rule.depend.supplier(source);
-            if (Core.isNullOrUndefined(dependValue)) return true;
-            return !Core.isNullOrUndefined(value);
+            if (!rule.depend.supplier(source)) return true;
+            return !Core.isEmpty(value);
         }
     },
     messages: {
@@ -45,7 +44,7 @@ Object.assign(Rules, {
             return {requires: names, ...Rules.requires};
         },
         depend(field, supplier) {
-            supplier = supplier || (value => Core.getValue(value, field));
+            supplier = supplier || (value => !Core.isEmpty(Core.getValue(value, field)));
             return {depend: {field: field, supplier}, ...Rules.depend};
         }
     }

@@ -76,6 +76,18 @@ let Core = {
      */
     isNullOrUndefined(value) {
         return value === undefined || value === null;
+    },
+    /**
+     * 是否为空
+     * @param {*} value
+     * @return {boolean}
+     */
+    isEmpty(value) {
+        if (Core.isNullOrUndefined(value)) return true;
+        let type = Core.getType(value);
+        if (type === 'string') return value === '';
+        if (type === 'array') return value.length === 0;
+        return false;
     }
 };
 
