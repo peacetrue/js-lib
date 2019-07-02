@@ -4,8 +4,8 @@ let Core = require('./core');
 let Rules = {
     rules: {
         requires(rule, value, callback, source, options) {
-            if (Core.isNullOrUndefined(value)) return true;
-            return rule.requires.filter(name => !Core.isNullOrUndefined(value[name])).length > 0;
+            if (Core.isEmpty(value)) return true;
+            return rule.requires.filter(name => !Core.isEmpty(value[name])).length > 0;
         },
         depend(rule, value, callback, source, options) {
             if (!rule.depend.supplier(source)) return true;
@@ -22,11 +22,13 @@ function join(name) {
     return {
         validator(rule, value, callback, source, options) {
             let valid = Rules.rules[name].apply(this, arguments);
+            let error = undefined;
             if (!valid) {
                 let message = rule.message || options.messages[name] || Rules.messages[name];
                 let opts = rule[name];
-                return new Error(Core.format(message, {field: rule.field, opts: opts}));
+                error = new Error(Core.format(message, {field: rule.field, opts: opts}));
             }
+            callback(error);
         },
     };
 }

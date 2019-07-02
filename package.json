@@ -1,6 +1,6 @@
 {
   "name": "peacetrue-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "js工具类及常用组件扩展",
   "type": "module",
   "private": false,
