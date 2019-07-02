@@ -9,6 +9,7 @@ module.exports = {
         'Core': './src/core.js',
         'PropertyPath': './src/property-path.js',
         'Object': './src/object.js',
+        'AsyncValidator': './src/async-validator.js',
     },
     devtool: 'inline-source-map',
     plugins: [
@@ -27,17 +28,18 @@ module.exports = {
     },
     externals: {
         './core': {
-            commonjs: './core',
-            commonjs2: './core',
-            amd: './core',
-            root: 'Peace.Core'
+            commonjs: 'peacetrue-js/src/core',
+            commonjs2: 'peacetrue-js/src/core',
+            amd: 'peacetrue-js/src/core',
+            root: ['Peace', 'Core']
         },
         './property-path': {
-            commonjs: './property-path',
-            commonjs2: './property-path',
-            amd: './property-path',
-            root: 'Peace.PropertyPath'
-        }
+            commonjs: 'peacetrue-js/src/property-path',
+            commonjs2: 'peacetrue-js/src/property-path',
+            amd: 'peacetrue-js/src/property-path',
+            root: ['Peace', 'PropertyPath']
+        },
+        'jsonpath': 'jsonpath'
     }
 
 };

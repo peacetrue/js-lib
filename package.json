@@ -1,7 +1,7 @@
 {
-  "name": "js-util",
+  "name": "peacetrue-js",
   "version": "1.0.0",
-  "description": "js工具类",
+  "description": "js工具类及常用组件扩展",
   "type": "module",
   "private": false,
   "files": [
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/peacetrue/js-util.git"
+    "url": "git+https://github.com/peacetrue/js-lib.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/peacetrue/js-util/issues"
+    "url": "https://github.com/peacetrue/js-lib/issues"
   },
-  "homepage": "https://github.com/peacetrue/js-util#readme",
+  "homepage": "https://github.com/peacetrue/js-lib#readme",
   "directories": {
     "test": "test"
   },
@@ -33,9 +33,11 @@
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "webpack": "^4.34.0",
-    "webpack-cli": "^3.3.4"
+    "webpack-cli": "^3.3.4",
+    "clean-webpack-plugin": "^3.0.0",
+    "async-validator": "^1.11.3",
+    "jsonpath": "^1.0.2"
   },
   "dependencies": {
-    "clean-webpack-plugin": "^3.0.0"
   }
 }

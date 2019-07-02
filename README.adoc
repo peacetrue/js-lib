@@ -112,3 +112,18 @@ let demo = {
 
 == Object
 
+== async-validator
+.参考
+* https://github.com/yiminghe/async-validator
+
+=== requires
+多个属性中至少有一个不为``null`` 或者 ``undefined``
+
+=== depend
+属性B依赖于属性A；
+属性A有值，则属性B必须有值；
+属性A无值，则属性B可以有值也可以无值。
+
+
+
+

@@ -34,6 +34,49 @@ let Core = {
             || value instanceof Date
             || value instanceof RegExp;
     },
+    /**
+     * 获取对象的值
+     * @param {object} object
+     * @param {string} path 属性路径
+     * @return {*}
+     */
+    getValue(object, path) {
+        //TODO 如何实现可选的jsonpath依赖在node中, eval快还是jsonpath快？
+        let jsonpath = require('jsonpath');
+        return jsonpath
+            ? jsonpath.value(object, `$.${path}`)
+            : Core._getValue(object, path);
+    },
+    /** 通过eval获取对象值 */
+    _getValue(object, path) {
+        try {
+            return eval("object." + path);
+        } catch (e) {
+            if (console && console.warn) console.warn(`can't eval ${path} on object `, object);
+            return undefined;
+        }
+    },
+    /**
+     * 格式化
+     * @param {String} message
+     * @param {Object|Array} value
+     * @return {String}
+     */
+    format(message, value) {
+        if (Core.isSimpleType(value)) value = [value];
+        return Array.isArray(value)
+            ? message.replace(/{(\d+)}/g, (matched, index) => value[index])
+            //TODO 提供精确匹配属性路径的正则表达式
+            : message.replace(/{(.*?)}/g, (matched, name) => Core.getValue(value, name));
+    },
+    /**
+     * 是否null或者undefined
+     * @param {*} value
+     * @return {boolean}
+     */
+    isNullOrUndefined(value) {
+        return value === undefined || value === null;
+    }
 };
 
 module.exports = Core;

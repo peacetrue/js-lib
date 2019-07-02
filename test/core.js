@@ -41,18 +41,32 @@ describe('Core.getType', function () {
 
     it('function', () => {
         expect(Core.getType(function () {})).to.equal('function');
-        expect((function(){}) instanceof Function).to.equal(true);
+        expect((function () {}) instanceof Function).to.equal(true);
+    });
+});
+
+describe('Core.getValue', function () {
+    let object = {roles: [{name: 'admin'}]};
+    it('eval right', () => {
+        expect(Core.getValue(object, 'roles[0].name')).to.equal('admin');
+    });
+    it('eval error', () => {
+        expect(Core.getValue(object, 'roles[3].name')).to.equal(undefined);
     });
 });
 
 
-// // 测试脚本里面应该包括一个或多个describe块，称为测试套件（test suite）
-// describe('isPrimitiveOrWrapper', function () {
-//     it('string primitive', () => {
-//         expect(Core.isPrimitiveOrWrapper('')).to.equal(true);
-//     });
-//     it('string wrapper', () => {
-//         expect(Core.isPrimitiveOrWrapper(new String(''))).to.equal(true);
-//     });
-// });
+describe('Core.format', function () {
+    it('array', () => {
+        expect(Core.format('hi! {0} want do {1}', ['小明', '上学'])).to.equal('hi! 小明 want do 上学');
+    });
+
+    it('object', () => {
+        expect(Core.format('hi! {name} want do {something}', {name: '小明', something: '上学'})).to.equal('hi! 小明 want do 上学');
+    });
+
+    it('object', () => {
+        expect(Core.format('hi! {person.name} want do {person.something}', {person: {name: '小明', something: '上学'}})).to.equal('hi! 小明 want do 上学');
+    });
+});
 
