@@ -14,9 +14,9 @@
   "scripts": {
     "test": "mocha --recursive",
     "examples": "open ./examples/index.html",
-    "build": "npm run build:separate && npm run build:all",
-    "build:separate": "webpack --config build/webpack.config.separate.js",
-    "build:all": "webpack --config build/webpack.config.all.js"
+    "build": "webpack -pt:module=* -pt:clean && webpack",
+    "build:gather": "webpack -pt:clean",
+    "build:all": "webpack -pt:module=* -pt:clean"
   },
   "repository": {
     "type": "git",
@@ -42,5 +42,8 @@
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.19.0",
+    "qs": "^6.7.0"
+  }
 }
