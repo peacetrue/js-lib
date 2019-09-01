@@ -1,29 +1,19 @@
 const Path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const Loadash = require('lodash');
+const {args2options} = require('./src/node');
 
 /* prefix:--
 module|m=*|{moduleName}|none  //指定编译的模块，none编译到一个文件中，默认为none
 clean|c //执行清除插件
 */
-console.info('process.argv:', process.argv);
-
-function args2options(args, prefix = '-pt:', separator = '=') {
-    let options = {module: 'none'};
-    args.filter(argv => argv.startsWith(prefix))
-        .map(argv => argv.substring(prefix.length).split(separator))
-        .forEach(value => options[value[0]] = value[1]);
-    return options;
-}
-
-let options = args2options(process.argv);
-console.info('options:', options);
+let options = Loadash.merge({module: 'none'}, args2options(process.argv, '-pt:'));
 
 let configs = {
     base: {
         mode: 'development',
         // mode: 'production',
-        devtool: 'inline-source-map',
+        devtool: 'source-map',
         plugins: [
             // new CleanWebpackPlugin(),
         ],
@@ -34,7 +24,13 @@ let configs = {
             globalObject: 'this',
         },
         externals: {
-            'jsonpath': 'jsonpath'
+            'jsonpath': 'jsonpath',
+            'axios': {
+                commonjs: 'axios',
+                commonjs2: 'axios',
+                amd: 'axios',
+                root: '_'
+            },
         }
     },
     'none': {
@@ -52,6 +48,8 @@ let configs = {
             'PropertyPath': './src/property-path.js',
             'Object': './src/object.js',
             'AsyncValidator': './src/async-validator.js',
+            'Node': './src/node.js',
+            // 'Axios': './src/axios.js',
         },
         output: {
             filename(chunkData) {
@@ -82,7 +80,7 @@ if ('clean' in options) {
     configs.base.plugins.push(new CleanWebpackPlugin());
 }
 
-function findOptions(module) {
+function findModuleOptions(module) {
     if (module in configs) return configs[module];
     let all = configs['*'];
     if (!(module in all.entry)) throw new Error(`invalid module[${module}]`);
@@ -90,4 +88,4 @@ function findOptions(module) {
     return all;
 }
 
-module.exports = Loadash.merge(configs.base, findOptions(options.module));
+module.exports = Loadash.merge(configs.base, findModuleOptions(options.module));
