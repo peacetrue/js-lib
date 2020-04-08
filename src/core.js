@@ -88,6 +88,25 @@ let Core = {
         if (type === 'string') return value === '';
         if (type === 'array') return value.length === 0;
         return false;
+    },
+    /**
+     * 对数组进行分组
+     * @param {Array} array 待分组的数组
+     * @param {Function} keyMapper key转换器，接收两个参数 element, index
+     * @param {Function} valueMapper value转换器，接收两个参数 element, index
+     * @return {Object}
+     */
+    groupBy(array,
+            keyMapper = (element, index) => element,
+            valueMapper = (element, index) => index) {
+        let groupBy = {};
+        for (let i = 0; i < array.length; i++) {
+            let element = array[i];
+            let key = keyMapper(element, i);
+            if (!(key in groupBy)) groupBy[key] = [];
+            groupBy[key].push(valueMapper(element, i));
+        }
+        return groupBy;
     }
 };
 
