@@ -1,0 +1,14 @@
+{
+  "name": "peacetrue-yup",
+  "version": "0.0.2",
+  "description": "some extend for yup",
+  "main": "index.js",
+  "dependencies": {
+    "yup": "^0.28.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xiayx",
+  "license": "ISC"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "peacetrue-httpclient",
+  "version": "0.0.1",
+  "description": "httpclient proxy",
+  "main": "index.js",
+  "dependencies": {
+    "qs": "^6.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xiayx",
+  "license": "ISC"
+}

@@ -1,4 +1,4 @@
-const Axios = require('axios');
+const Axios = require('peacetrue-core/src/axios');
 const Qs = require('qs');
 
 //--------------Axios

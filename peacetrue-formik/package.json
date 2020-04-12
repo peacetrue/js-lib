@@ -1,0 +1,17 @@
+{
+  "name": "peacetrue-formik",
+  "version": "0.0.1",
+  "description": "some extend for formik",
+  "files": [
+    "src"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "formik": "^2.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xiayx",
+  "license": "ISC"
+}

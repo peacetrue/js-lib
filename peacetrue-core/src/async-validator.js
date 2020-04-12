@@ -1,5 +1,5 @@
 let Core = require('./core.js');
-let Axios = require('axios');
+let Axios = require('peacetrue-core/src/axios');
 
 //basic rule, can't support message placeholder
 let Rules = {

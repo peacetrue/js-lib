@@ -7,16 +7,16 @@
   "files": [
     "build",
     "src",
-    "test",
+    "utils/test",
     "dist",
     "examples"
   ],
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "../node_modules/.bin/mocha --recursive",
     "examples": "open ./examples/index.html",
-    "build": "webpack -pt:module=* -pt:clean && webpack",
-    "build:gather": "webpack -pt:clean",
-    "build:all": "webpack -pt:module=* -pt:clean"
+    "build": "../node_modules/.bin/webpack -pt:module=* -pt:clean && webpack",
+    "build:gather": "../node_modules/.bin/webpack -pt:clean",
+    "build:all": "../node_modules/.bin/webpack -pt:module=* -pt:clean"
   },
   "repository": {
     "type": "git",
