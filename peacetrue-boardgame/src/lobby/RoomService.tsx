@@ -120,10 +120,10 @@ export class RoomService {
         );
         if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
         return await resp.json()
-            .then((result: { rooms: Array<string> }) => result.rooms.map(item => this.mapperRoom(item)));
+            .then((result: { rooms: Array<string> }) => result.rooms.map(item => RoomService.mapperRoom(item)));
     }
 
-    private mapperRoom(result: any): Room {
+    private static mapperRoom(result: any): Room {
         return {id: result.gameID || result.roomID, players: result.players, setupData: result.setupData};
     }
 
@@ -137,7 +137,7 @@ export class RoomService {
         );
         if (resp.status === 404) return Promise.resolve(null);
         if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
-        return await resp.json().then(result => this.mapperRoom(result));
+        return await resp.json().then(result => RoomService.mapperRoom(result));
     }
 }
 

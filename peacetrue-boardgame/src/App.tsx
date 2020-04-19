@@ -14,11 +14,11 @@ let TicTacToe = Client({
         return <Room {...props}/>;
     },
     debug: false,
-    multiplayer: SocketIO({server: 'http://192.168.1.104:8000'}),
+    multiplayer: SocketIO({server: 'http://peacetrue.cn:8000'}),
 });
 
 
-let roomService = new RoomService({url: 'http://192.168.1.104:8000', games: [tacToeGame]});
+let roomService = new RoomService({url: 'http://peacetrue.cn:8000', games: [tacToeGame]});
 export default function (props: any) {
     let params = new URLSearchParams(window.location.search);
     let user: string = params.get("user") as string;
