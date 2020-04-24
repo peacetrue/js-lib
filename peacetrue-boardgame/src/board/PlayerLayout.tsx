@@ -3,9 +3,9 @@ import {StandardProps, Theme} from "@material-ui/core";
 import {withStyles} from "@material-ui/styles";
 import clsx from "clsx";
 import {Player as PlayerComponent} from "./Player";
-import {Player} from "../lobby/RoomService";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+import {Player} from "../boardgame-types";
 
 
 export type PlayerLayoutClassKey =
@@ -15,7 +15,7 @@ export type PlayerLayoutClassKey =
 export interface PlayerLayoutProps extends StandardProps<React.HTMLAttributes<HTMLDivElement>, PlayerLayoutClassKey> {
     board: JSX.Element,
     playerComponent: PlayerComponent,
-    players: Array<Player>,
+    players: Array<Required<Player>>,
     playerId: number,
 }
 

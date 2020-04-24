@@ -103,4 +103,12 @@ export function findVictoryPlayer(cells: Array<Cell>, boundary: Boundary, count:
     return null;
 }
 
+export function extract(object: ObjectLike<any>, keys: Array<string>): ObjectLike<any> {
+    let newObject: ObjectLike<any> = {};
+    for (let key of keys) {
+        newObject[key] = object[key];
+    }
+    return newObject;
+}
+
 export default {toLocation, toIndex, groupBy, findVictoryPlayer};

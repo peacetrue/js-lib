@@ -1,28 +1,21 @@
 const lines = `{
-    G: any,
-    ctx: any,
-    moves: any,
-    events: any,
-    reset: any,
-    undo: any,
-    redo: any,
-    step: any,
-    log: any,
-    gameID: number,
-    playerID: number,
-    gameMetadata: any,
-    isActive: boolean,
-    isMultiplayer: boolean,
-    isConnected: boolean,
-    credentials: string
+    /** 英文名称 */
+    code: string,
+    /** 中文名称 */
+    desc: string,
+    logo: string,
+    intro: string,
+    detail: string,
 }`;
 
 function getKey(string) {
     let lines = string.split("\n");
     lines.shift();
     lines.pop();
-    let keys = lines.map((line) => line.split(":", 2).shift().trim());
-    return keys.join(',')
+    let keys = lines
+        .filter(line => !/ *\/\*\*/.test(line))
+        .map((line) => line.split(":", 2).shift().trim());
+    return `'${keys.join("','")}'`
 }
 
 

@@ -3,12 +3,17 @@ import {StandardProps, Theme} from "@material-ui/core";
 import {withStyles} from "@material-ui/styles";
 import clsx from "clsx";
 import GameOver from "./GameOver";
-import {Player} from "../lobby/RoomService";
 import PropTypes from 'prop-types'
 import PlayerLayout from './PlayerLayout'
 import TicTacToeBoard from "./TicTacToeBoard";
 import PlayerComp from "./Player";
+import {Player} from "../boardgame-types";
 
+/*
+* 房间：用于展现玩家之间的游戏对局，包括：
+* * 棋盘
+*
+*/
 
 /**由 boardgame 传入*/
 export interface RoomProps {
@@ -35,7 +40,7 @@ export interface RoomProps {
     plugins: any,
 }
 
-export interface Room<T extends RoomProps> {
+export interface Room<T extends RoomProps = RoomProps> {
     (props: T): JSX.Element
 }
 
@@ -47,7 +52,7 @@ export interface CustomRoomProps {
     playerLayout: PropTypes.ReactComponentLike,
     board: PropTypes.ReactComponentLike,
     player: PropTypes.ReactComponentLike,
-    gameOver: PropTypes.ReactComponentLike,
+    gameOver: PropTypes.ReactElementLike,
 }
 
 export interface StandardRoomProps extends RoomProps, CustomRoomProps, StandardProps<React.HTMLAttributes<HTMLDivElement>, StandardRoomClassKey> {
@@ -60,21 +65,19 @@ export const standardRoom: StandardRoom = function StandardRoom(props: StandardR
     console.info("standardRoom.props:", props);
     let {
         classes, className,
-        playerLayout: PlayerLayout, board: Board, player: Player, gameOver: GameOver,
+        playerLayout: PlayerLayout, board: Board, player: Player, gameOver,
         G, ctx, moves, events, reset, undo, redo, step, log, gameID, playerID,
         gameMetadata, isActive, isMultiplayer, isConnected, credentials,
         _redo, _undo, _stateID, plugins, debug,
         ...other
     } = props;
-    let gameover = ctx.gameover;
     let player = gameMetadata.find(item => item.id == playerID);
     return (
         <div ref={arguments[1]} className={clsx(classes?.root, className)} {...other}>
             <PlayerLayout board={<Board {...{G, ctx, moves, events}}/>}
                           playerComponent={Player}
                           players={gameMetadata} playerId={player?.id}/>
-            {gameover &&
-            <GameOver isDraw={gameover.isDraw} winner={gameover.winner} player={player}/>}
+            {gameOver}
         </div>
     );
 }
@@ -83,7 +86,6 @@ export const standardRoomDefaults: Partial<StandardRoomProps> = {
     playerLayout: PlayerLayout,
     board: TicTacToeBoard,
     player: PlayerComp,
-    gameOver: GameOver,
 };
 
 export const refStandardRoom = React.forwardRef(standardRoom);

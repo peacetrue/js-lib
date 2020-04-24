@@ -12,7 +12,7 @@ server.run(8000, () => console.log("server running..."));
 
 // npm i esm
 // node -r esm src/server.js
-// ts-node -r esm src/server.ts -d
+// ts-node -r esm src/server.ts  18098
 // ts-node -r esm utils/typescript_utils.ts
 // ts-node  utils/typescript_utils.ts
 /*

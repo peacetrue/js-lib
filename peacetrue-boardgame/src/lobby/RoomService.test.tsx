@@ -15,7 +15,7 @@ describe('RoomService', () => {
 
     let roomId = '';
     test('create', async () => {
-        let result = await roomService.create({gameName: game.name, numPlayers: 2, setupData: {timeout: 2}});
+        let result = await roomService.create({gameName: game.code, numPlayers: 2, setupData: {timeout: 2}});
         console.info("create result:", result);
         roomId = result.roomId;
     });
@@ -24,7 +24,7 @@ describe('RoomService', () => {
     test('join', async () => {
         for (let i = 0; i < 2; i++) {
             let result = await roomService.join({
-                gameName: game.name,
+                gameName: game.code,
                 roomId: roomId,
                 playerId: i,
                 playerName: `test${i}`
@@ -37,7 +37,7 @@ describe('RoomService', () => {
     test('renamePlayer', async () => {
         for (let i = 0; i < 2; i++) {
             let result = await roomService.renamePlayer({
-                gameName: game.name,
+                gameName: game.code,
                 roomId: roomId,
                 playerId: i,
                 credentials: playerCredentials[i],
@@ -47,20 +47,21 @@ describe('RoomService', () => {
         }
     });
 
+    // npm run test --testNamePattern="RoomService query"
     test('query', async () => {
-        let result = await roomService.query({gameName: game.name});
+        let result = await roomService.query({gameName: game.code});
         console.info(`query result:`, JSON.stringify(result));
     });
 
     test('get', async () => {
-        let result = await roomService.get({gameName: game.name, roomId: '851zzSJme'});
+        let result = await roomService.get({gameName: game.code, roomId: '851zzSJme'});
         console.info(`get result:`, result);
     });
 
     test('leave', async () => {
         for (let i = 0; i < 2; i++) {
             let result = await roomService.leave({
-                gameName: game.name,
+                gameName: game?.name || '',
                 roomId: roomId,
                 playerId: i,
                 credentials: playerCredentials[i],

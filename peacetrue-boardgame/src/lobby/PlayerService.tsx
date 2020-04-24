@@ -1,20 +1,23 @@
-import RoomService, {Room} from "./RoomService";
+import RoomService from "./RoomService";
 
-type StateCode = 'initial' | 'waiting' | 'playing';
+export type StateCode =
+    | 'initial'
+    | 'waiting'
+    | 'playing';
 
-interface Credentials {
+export interface Credentials {
     playerName: string,
     playerId: number,
     roomId: string,
     credentials: string
 }
 
-interface State {
+export interface State {
     code: StateCode,
-    credentials?: Credentials | null
+    credentials?: Credentials | undefined
 }
 
-export class QuickStart {
+export class PlayerService {
 
     roomService: RoomService
     gameName: string
@@ -26,18 +29,18 @@ export class QuickStart {
         this.playerName = playerName;
     }
 
-    getCache(): Credentials | null {
+    getCache(): Credentials | undefined {
         let cache = localStorage.getItem(this.playerName);
-        return cache ? JSON.parse(cache) : null;
+        return cache ? JSON.parse(cache) : undefined;
     }
 
     /** 获取状态 */
     getState(): Promise<State> {
         let credentials = this.getCache();
-        if (credentials === null) return Promise.resolve({code: 'initial'});
+        if (!credentials) return Promise.resolve({code: 'initial'});
         return this.roomService.get({gameName: this.gameName, roomId: credentials.roomId})
             .then(room => {
-                if (room) return {code: this.hasVacancy(room) ? 'waiting' : 'playing', credentials: credentials}
+                if (room) return {code: RoomService.hasVacancy(room) ? 'waiting' : 'playing', credentials: credentials}
                 localStorage.clear();
                 return {code: 'initial'};
             });
@@ -65,33 +68,26 @@ export class QuickStart {
         });
     }
 
+    createAndJoin(numPlayers: number = 2, setupData?: any): Promise<State> {
+        return this.create(numPlayers, setupData)
+            .then(room => this.join(room.roomId, 0))
+            .then(result => ({code: 'waiting', credentials: result}))
+    }
+
     async start(numPlayers: number, setupData?: any): Promise<State> {
         let rooms = await this.roomService.query({gameName: this.gameName});
-        rooms = this.findVacancy(rooms);
-        if (rooms.length > 0) {
-            return this.join(rooms[0].id, 1).then(result => ({code: 'playing', credentials: result}));
+        let vacancyRooms = RoomService.findVacancyRooms(rooms);
+        if (vacancyRooms.length > 0) {
+            let firstRoom = vacancyRooms[0];
+            return this.join(firstRoom.id, RoomService.findJoinedPlayers(firstRoom).length)
+                .then(result => ({
+                    code: 'playing',
+                    credentials: result
+                }));
         } else {
-            return this.create(2)
-                .then(room => this.join(room.roomId, 0))
-                .then(result => ({code: 'waiting', credentials: result}))
+            return this.createAndJoin(numPlayers, setupData);
         }
-    }
-
-    findJoined(rooms: Array<Room>): Room | null {
-        return rooms.filter(room => this.hasJoined(room)).shift() || null;
-    }
-
-    hasJoined(room: Room): boolean {
-        return room.players.some(player => player.name === this.playerName);
-    }
-
-    findVacancy(rooms: Array<Room>): Array<Room> {
-        return rooms.filter(room => this.hasVacancy(room))
-    }
-
-    hasVacancy(room: Room): boolean {
-        return room.players.some(player => !player.name);
     }
 }
 
-export default QuickStart;
+export default PlayerService;

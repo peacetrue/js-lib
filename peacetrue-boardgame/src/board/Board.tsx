@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {ObjectLike} from "../common-types";
 import {Boundary} from "../utils";
-import {Ctx, G} from "../boardgame-types";
+import {G} from "../boardgame-types";
+import {Ctx} from "boardgame.io";
 
 export interface BoardProps {
     boundary: Boundary,//棋盘边界，宽和高

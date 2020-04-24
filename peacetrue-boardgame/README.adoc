@@ -1,0 +1,27 @@
+= 回合制游戏
+peacetrue
+v1.0, 2020-04-23: SNAPSHOT
+:doctype: docbook
+:toc: left
+:numbered:
+
+== 设计
+
+=== 大厅（Lobby）
+
+=== 游戏（Game）
+
+=== 等候室（WaitingRoom）
+
+=== 游戏室（PlayRoom）
+
+=== 棋盘
+
+=== 玩家
+
+* 玩家信息
+* 棋子信息
+* 步时信息
+* 回退
+
+=== 游戏结束

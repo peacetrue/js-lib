@@ -1,3 +1,9 @@
 export interface ObjectLike<V> {
-    [propName: string]: V
+    [name: string]: V
 }
+
+export interface Loadable<T = any> {
+    loading: boolean,
+    data?: T,
+}
+

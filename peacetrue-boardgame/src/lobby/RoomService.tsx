@@ -1,36 +1,24 @@
-import {ObjectLike} from "../common-types";
+import {GameConfig, GameInfo, Player} from "../boardgame-types";
 
-/**游戏*/
-export interface Game extends ObjectLike<any> {
-    name: string,
-    minPlayers: number,
-    maxPlayers: number,
-}
-
-/**玩家*/
-export interface Player extends ObjectLike<any> {
-    id: number,
-    name: string,
-}
-
-/**房间*/
+/** 房间 */
 export interface Room {
+    game?: GameInfo,
     id: string,
     players: Array<Player>,
     setupData?: any
 }
 
-/**选项*/
+/** 选项 */
 export interface RoomServiceOptions {
     url?: string,
-    games: Array<Game>,
+    games: Array<GameConfig>,
 }
 
-/**服务接口*/
+/** 服务接口 */
 export class RoomService {
 
-    url?: string
-    games: Array<Game> = []
+    url: string = ''
+    games: Array<GameConfig> = []
 
     constructor(options: RoomServiceOptions) {
         this.url = (options.url || '');
@@ -55,16 +43,13 @@ export class RoomService {
         return await resp.json().then((result: { gameID: string }) => ({roomId: result.gameID}));
     }
 
-    private findGameByName(name: string): Game | null {
-        for (let game of this.games) {
-            if (game.name === name) return game;
-        }
-        return null;
+    private findGameByName(name: string): GameConfig | undefined {
+        return this.games.find(game => game.code === name);
     }
 
-
     /**加入房间*/
-    async join(options: { gameName: string, roomId: string, playerId: number, playerName: string }): Promise<{ playerCredentials: string }> {
+    async join(options: { gameName: string, roomId: string, playerId: number, playerName: string })
+        : Promise<{ playerCredentials: string }> {
         const resp = await fetch(`${this.url}/games/${options.gameName}/${options.roomId}/join`, {
                 headers: {'Content-Type': 'application/json'},
                 method: 'POST',
@@ -120,6 +105,7 @@ export class RoomService {
         );
         if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
         return await resp.json()
+            // .then(result=>{console.info("result",result);return result;})
             .then((result: { rooms: Array<string> }) => result.rooms.map(item => RoomService.mapperRoom(item)));
     }
 
@@ -127,17 +113,50 @@ export class RoomService {
         return {id: result.gameID || result.roomID, players: result.players, setupData: result.setupData};
     }
 
-    /**获取游戏*/
-    async get(options: { gameName: string, roomId: string }): Promise<Room | null> {
-        let url = `${this.url}/games/${options.gameName}/${options.roomId}`;
+    /** 获取游戏 */
+    async get({gameName, roomId}: { gameName: string, roomId: string }): Promise<Room | undefined> {
+        let url = `${this.url}/games/${gameName}/${roomId}`;
         const resp = await fetch(url, {
                 headers: {'Content-Type': 'application/json'},
                 method: 'GET',
             }
         );
-        if (resp.status === 404) return Promise.resolve(null);
+        if (resp.status === 404) return Promise.resolve(undefined);
         if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
         return await resp.json().then(result => RoomService.mapperRoom(result));
+    }
+
+    static findJoinedRoom(rooms: Array<Room>, playerName: string): Room | undefined {
+        return rooms.find(room => this.isJoined(room, playerName));
+    }
+
+    static findJoinedPlayers(room: Room): Array<Player> {
+        return room.players.filter(player => player.name);
+    }
+
+    static isJoined(room: Room, playerName: string): boolean {
+        return room.players.some(player => player.name === playerName);
+    }
+
+    static findVacancyRooms(rooms: Array<Room>): Array<Room> {
+        return rooms.filter(room => this.hasVacancy(room))
+    }
+
+    static hasVacancy(room: Room): boolean {
+        return room.players.some(player => !player.name);
+    }
+
+    static findVacancyPlayers(room: Room): Array<Player> {
+        return room.players.filter(player => !player.name);
+    }
+
+    static findPlayer(room: Room, playerName: string): Player | undefined {
+        return room.players.find(player => player.name === playerName);
+    }
+
+    /** 找到第一个空位玩家的索引 */
+    static findFirstVacancyPlayerIndex(room: Room): number {
+        return room.players.findIndex(player => !player.name);
     }
 }
 

@@ -21,12 +21,11 @@ export interface TicTacToeBoardProps extends BoardProps, StandardProps<React.HTM
 export interface TicTacToeBoard extends Board<TicTacToeBoardProps> {
 }
 
-export const ticTacToeBoardDefaults: TicTacToeBoardProps = {
+export const ticTacToeBoardDefaults: Partial<TicTacToeBoardProps> = {
     boundary: {width: 12, height: 12},
     borderWidth: 1,
     chessmen: [FiberManualRecordIcon, RadioButtonUncheckedIcon],
     G: {},
-    ctx: {},
     moves: {},
     events: {},
 };
