@@ -20,6 +20,7 @@ export type GameClassKey =
 
 export interface GameProps extends GameInfo, StandardProps<React.HTMLAttributes<HTMLDivElement>, GameClassKey> {
     handleCreateRoom?(gameName: string): void;
+
     handleJoinRoom?(gameName: string): void;
 }
 
@@ -37,6 +38,7 @@ export interface Game {
 
 let game: Game = function Game(props: GameProps): JSX.Element {
     let {classes, className, code, desc, logo, intro, detail, handleCreateRoom, handleJoinRoom, ...other} = props;
+    let onClick = () => handleCreateRoom && handleCreateRoom(code);
     return (
         <Card ref={arguments[1]} className={clsx(classes?.root, className)} {...other} elevation={0} square={true}>
             <CardActionArea>
@@ -52,7 +54,7 @@ let game: Game = function Game(props: GameProps): JSX.Element {
             </CardActionArea>
             <CardActions>
                 <Button size="small" color="primary" disabled={!handleCreateRoom}
-                        onClick={() => handleCreateRoom && handleCreateRoom(code)}>
+                        onClick={onClick} onTouchEnd={onClick}>
                     创建房间
                 </Button>
                 {/*<Button size="small" color="primary" disabled={!handleJoinRoom}

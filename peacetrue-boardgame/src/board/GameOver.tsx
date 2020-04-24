@@ -77,12 +77,15 @@ export const gameOver: GameOver = function GameOver(props: GameOverProps = gameO
                        <React.Fragment>
                            {handleOnceAgain &&
                            <IconButton color="inherit" size="small"
-                                       onClick={() => handleOnceAgain && handleOnceAgain(currentPlayer)}>
+                                       onClick={() => handleOnceAgain && handleOnceAgain(currentPlayer)}
+                                       onTouchEnd={() => handleOnceAgain && handleOnceAgain(currentPlayer)}>
                                <PlayCircleFilledWhiteIcon/>
                            </IconButton>}
                            {handleLeave &&
                            <IconButton color="inherit" size="small"
-                                       onClick={() => handleLeave && handleLeave(currentPlayer)}>
+                                       onClick={() => handleLeave && handleLeave(currentPlayer)}
+                                       onTouchEnd={() => handleLeave && handleLeave(currentPlayer)}
+                           >
                                <Cancel/>
                            </IconButton>
                            }

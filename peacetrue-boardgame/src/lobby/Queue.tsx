@@ -116,7 +116,7 @@ let queue: Queue = function Queue(props: QueueProps): JSX.Element {
         if (player) {
             let handleClick = () => handleLeave && handleLeave(player as Required<Player>);
             return (<Button variant={'contained'} color={'primary'} className={classes?.leave}
-                            onClick={handleClick}>离开</Button>);
+                            onClick={handleClick} onTouchEnd={handleClick}>离开</Button>);
         } else {
             let player: Required<Player> = {
                 id: RoomService.findFirstVacancyPlayerIndex(room),
@@ -130,7 +130,7 @@ let queue: Queue = function Queue(props: QueueProps): JSX.Element {
                 });
             };
             return (<Button variant={'contained'} color={'primary'} className={classes?.join}
-                            onClick={handleClick}>加入</Button>);
+                            onClick={handleClick} onTouchEnd={handleClick}>加入</Button>);
         }
     }
 
