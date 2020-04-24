@@ -54,7 +54,7 @@ let game: Game = function Game(props: GameProps): JSX.Element {
             </CardActionArea>
             <CardActions>
                 <Button size="small" color="primary" disabled={!handleCreateRoom}
-                        onClick={onClick} onTouchEnd={onClick}>
+                        onClick={onClick} onTouchEnd={onClick} >
                     创建房间
                 </Button>
                 {/*<Button size="small" color="primary" disabled={!handleJoinRoom}

@@ -153,7 +153,7 @@ let queue: Queue = function Queue(props: QueueProps): JSX.Element {
             <Box className={classes?.operateBar}>
                 {renderOperate(room)}
                 <CopyToClipboard
-                    text={`http://${window.location.host}?roomId=${room.id}&user=${new Date().toISOString()}`}>
+                    text={`${process.env.REACT_APP_CLIENT_URL}?roomId=${room.id}&user=${new Date().toISOString()}`}>
                     <Button variant={'contained'} color={'primary'}
                             aria-owns={open ? 'mouse-over-popover' : undefined}
                             aria-haspopup="true"

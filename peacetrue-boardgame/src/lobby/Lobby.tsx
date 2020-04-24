@@ -37,7 +37,7 @@ export interface LobbyProps extends StandardProps<React.HTMLAttributes<HTMLDivEl
 
 export const lobbyDefaults: LobbyProps = {
     url: 'http://localhost:8000',
-    apiUrl: 'http://localhost:8000',
+    // apiUrl: 'http://localhost:8000',
     game: TicTacToeGame(),
     room: Room,
 };

@@ -18,7 +18,9 @@ ReactDOM.render(
                         <Typography variant={'h6'}> 童年小游戏 </Typography>
                     </Toolbar>
                 </AppBar>
-                <Lobby {...lobbyDefaults} />
+                <Lobby
+                    {...lobbyDefaults}
+                    url={process.env.REACT_APP_SERVER_URL || ''}/>
                 <footer style={{textAlign: 'center', margin: '16px 0'}}> © 2020 Peacetrue, Inc.</footer>
             </Container>
         </ThemeProvider>

@@ -4,3 +4,7 @@
 
 git reset --hard
 git pull
+
+cd peacetrue-boardgame
+npm run build
+nginx -s reload
