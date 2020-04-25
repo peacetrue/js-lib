@@ -1,12 +1,12 @@
 {
   "name": "peacetrue-formik",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "some extend for formik",
   "files": [
     "src"
   ],
   "main": "index.js",
-  "dependencies": {
+  "devDependencies": {
     "formik": "^2.1.4"
   },
   "scripts": {
