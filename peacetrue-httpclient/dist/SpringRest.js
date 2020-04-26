@@ -1,11 +1,11 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var qs = require("qs");
 function stringify(params) {
     return qs.stringify(params, {
         arrayFormat: 'repeat',
         serializeDate: function (d) { return d.getTime().toString(); },
-        allowDots: true
+        allowDots: true,
     });
 }
 var SpringRest = function (httpClient) {
@@ -24,4 +24,4 @@ var SpringRest = function (httpClient) {
         return httpClient(url, options);
     };
 };
-exports["default"] = SpringRest;
+exports.default = SpringRest;

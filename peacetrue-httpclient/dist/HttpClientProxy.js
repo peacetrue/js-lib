@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var HttpClient_1 = require("./HttpClient");
 /** The first proxy takes effect first */
 exports.HttpClientJoiner = function (httpClient) {

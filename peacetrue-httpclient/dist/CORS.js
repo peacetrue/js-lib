@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var CORS = function (httpClient) {
     return function (url, options) {
         if (options === void 0) { options = {}; }
@@ -8,4 +8,4 @@ var CORS = function (httpClient) {
         return httpClient(url, options);
     };
 };
-exports["default"] = CORS;
+exports.default = CORS;

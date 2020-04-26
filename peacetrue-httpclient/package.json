@@ -1,16 +1,32 @@
 {
   "name": "peacetrue-httpclient",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "HttpClient and HttpClientProxy",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "dependencies": {
     "@types/qs": "^6.9.1",
     "qs": "^6.9.1"
   },
   "scripts": {
-    "build": "tsc index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "jest"
   },
+  "keywords": [
+    "typescript",
+    "httpclient",
+    "httpclientproxy"
+  ],
   "author": "xiayx",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.2.1",
+    "jest": "^25.4.0",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3",
+    "@types/mockjs": "^1.0.2",
+    "mockjs": "^1.1.0"
+  }
 }

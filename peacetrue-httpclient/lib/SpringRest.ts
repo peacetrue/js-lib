@@ -1,7 +1,7 @@
 import qs = require("qs");
 import HttpClientProxy from './HttpClientProxy'
 
-function stringify(params) {
+function stringify(params: any): string {
     return qs.stringify(params, {
         arrayFormat: 'repeat',
         serializeDate: (d) => d.getTime().toString(),
