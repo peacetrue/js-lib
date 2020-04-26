@@ -1,15 +1,14 @@
 {
   "name": "peacetrue-formik",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "some extend for formik",
   "files": [
+    "dist",
     "src"
   ],
-  "main": "index.js",
-  "devDependencies": {
-    "formik": "^2.1.4"
-  },
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "xiayx",
