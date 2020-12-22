@@ -9,6 +9,7 @@ v1.0, 2019-06-13: SNAPSHOT
 //TODO 文档待完善
 
 == 前言
+
 .参考
 * https://www.lodashjs.com/
 * http://es6.ruanyifeng.com/
@@ -16,16 +17,31 @@ v1.0, 2019-06-13: SNAPSHOT
 * https://webpack.js.org/configuration/devtool/
 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 
+== node 支持 import 和 export
+
+. 全局安装 babel-node 命令： ``npm install babel-cli -g``
+. 项目内安装babel预设环境: ``npm install babel-preset-env -D``
+. 使用 babel-node 代替 node：``node src/cors.js`` -> ``babel-node --presets env src/cors.js``
+. 参数 ``--presets env`` 可使用配置文件 .babelrc 存储
+
+== TypeScript
+
+tsc hello.ts
+
 == 疑问
+
 === 如何输出源码和压缩文件
+
 开发模式下生成源码，生产环境下生成压缩代码
 
 === umd
+
 生成的lib导出都是一个Module，module.default才是最终的内容，如何直接导出内容？
 
 === 如何排除内部模块引用
 
 === filename函数的入参结构
+
 [source%nowrap,javascript]
 ----
  { noChunkHash: false,
@@ -54,6 +70,7 @@ v1.0, 2019-06-13: SNAPSHOT
 ----
 
 === externals参数结构
+
 ----
 arguments: [Arguments] {
   '0': '/Users/xiayx/Documents/Projects/js-util',
@@ -79,10 +96,10 @@ arguments: [Arguments] {
 ----
 
 == Core
+
 === isPrimitiveOrWrapper
-是否原始类型或其封装类型。
-原始类型包括``boolean``, ``number``, ``string``, ``function``，
-对应的封装类型为``Boolean``, ``Number``, ``String``, ``Function``。
+
+是否原始类型或其封装类型。 原始类型包括``boolean``, ``number``, ``string``, ``function``， 对应的封装类型为``Boolean``, ``Number``, ``String``, ``Function``。
 
 .示例
 ----
@@ -90,9 +107,11 @@ arguments: [Arguments] {
 ----
 
 == PropertyPath
+
 嵌套对象中从根属性到叶子属性组成的路径。
 
 例如：
+
 [source%nowrap,javascript]
 ----
 let demo = {
@@ -107,24 +126,27 @@ let demo = {
     date: new Date(),
 }
 ----
+
 * array[3].name : 'hi array'
 * object.name : 'hi object'
 
 == Object
 
 == async-validator
+
 .参考
 * https://github.com/yiminghe/async-validator
 
 === requires
+
 多个属性中至少有一个不为``null`` 或者 ``undefined``
 
 === depend
-属性B依赖于属性A；
-属性A有值，则属性B必须有值；
-属性A无值，则属性B可以有值也可以无值。
+
+属性B依赖于属性A； 属性A有值，则属性B必须有值； 属性A无值，则属性B可以有值也可以无值。
 
 === unique
+
 唯一性校验，支持多字段唯一性
 
 == axios

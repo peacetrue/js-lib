@@ -107,6 +107,31 @@ let Core = {
             groupBy[key].push(valueMapper(element, i));
         }
         return groupBy;
+    },
+    /**
+     * Pivot a JavaScript Array: Convert a Column to a Row
+     *
+     * let arr = [
+     * ["姓名", "年龄"],
+     * ["张三", 18],
+     * ["李四", 19],
+     * ];
+     *
+     * let arr = [
+     * ["姓名", "张三","李四"],
+     * ["年龄",   18 ,   19],
+     * ];
+     */
+    pivotMatrix(rows) {
+        let pivotedRows = [];
+        for (let i = 0; i < rows.length; i++) {
+            let cells = rows[i];
+            for (let j = 0; j < cells.length; j++) {
+                if (!pivotedRows[j]) pivotedRows[j] = [];
+                pivotedRows[j][i] = cells[j];
+            }
+        }
+        return pivotedRows;
     }
 };
 

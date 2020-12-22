@@ -74,6 +74,12 @@ export class PlayerService {
             .then(result => ({code: 'waiting', credentials: result}))
     }
 
+    playAgainAndJoin({roomId, playerId, credentials}: { roomId: string, playerId: number, credentials: string, }): Promise<State> {
+        return this.roomService.playAgain({gameName: this.gameName, playerId, roomId, credentials})
+            .then(nextRoomId => this.join(nextRoomId, 0))
+            .then(result => ({code: 'waiting', credentials: result}))
+    }
+
     async start(numPlayers: number, setupData?: any): Promise<State> {
         let rooms = await this.roomService.query({gameName: this.gameName});
         let vacancyRooms = RoomService.findVacancyRooms(rooms);

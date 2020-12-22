@@ -54,7 +54,22 @@ describe('RoomService', () => {
     });
 
     test('get', async () => {
-        let result = await roomService.get({gameName: game.code, roomId: '851zzSJme'});
+        let result = await roomService.get({gameName: game.code, roomId: roomId});
+        console.info(`get result:`, result);
+    });
+
+    test('playAgain', async () => {
+        let result = await roomService.playAgain({
+            gameName: game.code,
+            roomId: roomId,
+            playerId: 0,
+            credentials: playerCredentials[0]
+        });
+        console.info(`playAgain result:`, result);
+    });
+
+    test('get', async () => {
+        let result = await roomService.get({gameName: game.code, roomId: roomId});
         console.info(`get result:`, result);
     });
 

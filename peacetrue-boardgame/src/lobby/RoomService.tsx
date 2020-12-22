@@ -39,7 +39,7 @@ export class RoomService {
                 setupData: options.setupData,
             }),
         });
-        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
         return await resp.json().then((result: { gameID: string }) => ({roomId: result.gameID}));
     }
 
@@ -59,7 +59,7 @@ export class RoomService {
                 }),
             }
         );
-        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
         return await resp.json();
     }
 
@@ -76,7 +76,7 @@ export class RoomService {
                 }),
             }
         );
-        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
         return await resp.json();
     }
 
@@ -91,7 +91,7 @@ export class RoomService {
                 }),
             }
         );
-        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
         return await resp.json();
     }
 
@@ -103,13 +103,14 @@ export class RoomService {
                 method: 'GET',
             }
         );
-        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
         return await resp.json()
             // .then(result=>{console.info("result",result);return result;})
             .then((result: { rooms: Array<string> }) => result.rooms.map(item => RoomService.mapperRoom(item)));
     }
 
     private static mapperRoom(result: any): Room {
+        console.info("room:", result)
         return {id: result.gameID || result.roomID, players: result.players, setupData: result.setupData};
     }
 
@@ -122,8 +123,25 @@ export class RoomService {
             }
         );
         if (resp.status === 404) return Promise.resolve(undefined);
-        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}`);
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
         return await resp.json().then(result => RoomService.mapperRoom(result));
+    }
+
+    /** 在玩一次 */
+    async playAgain({gameName, roomId, playerId, credentials}:
+                        { gameName: string, roomId: string, playerId: number, credentials: string, }): Promise<string> {
+        let url = `${this.url}/games/${gameName}/${roomId}/playAgain`;
+        const resp = await fetch(url, {
+                headers: {'Content-Type': 'application/json'},
+                method: 'POST',
+                body: JSON.stringify({
+                    playerID: playerId,
+                    credentials: credentials
+                })
+            }
+        );
+        if (resp.status !== 200) throw new Error(`HTTP status ${resp.status}:[${resp.statusText}]`);
+        return await resp.json().then(result => result.nextRoomID);
     }
 
     static findJoinedRoom(rooms: Array<Room>, playerName: string): Room | undefined {

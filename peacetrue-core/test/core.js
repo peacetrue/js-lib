@@ -40,8 +40,10 @@ describe('Core.getType', function () {
     });
 
     it('function', () => {
-        expect(Core.getType(function () {})).to.equal('function');
-        expect((function () {}) instanceof Function).to.equal(true);
+        expect(Core.getType(function () {
+        })).to.equal('function');
+        expect((function () {
+        }) instanceof Function).to.equal(true);
     });
 });
 
@@ -62,11 +64,33 @@ describe('Core.format', function () {
     });
 
     it('object', () => {
-        expect(Core.format('hi! {name} want do {something}', {name: '小明', something: '上学'})).to.equal('hi! 小明 want do 上学');
+        expect(Core.format('hi! {name} want do {something}', {
+            name: '小明',
+            something: '上学'
+        })).to.equal('hi! 小明 want do 上学');
     });
 
     it('object', () => {
-        expect(Core.format('hi! {person.name} want do {person.something}', {person: {name: '小明', something: '上学'}})).to.equal('hi! 小明 want do 上学');
+        expect(Core.format('hi! {person.name} want do {person.something}', {
+            person: {
+                name: '小明',
+                something: '上学'
+            }
+        })).to.equal('hi! 小明 want do 上学');
     });
 });
 
+describe('Core.pivotMatrix', function () {
+    it('array', () => {
+        let arr = [
+            ["姓名", "年龄"],
+            ["张三", 18],
+            ["李四", 19],
+        ];
+        let exceptArr = [
+            ["姓名", "张三", "李四"],
+            ["年龄", 18, 19],
+        ];
+        expect(Core.pivotMatrix(arr)).to.equal(exceptArr);
+    });
+});

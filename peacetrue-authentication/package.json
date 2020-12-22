@@ -1,11 +1,14 @@
 {
-  "name": "peacetrue-formik",
-  "version": "0.0.6",
-  "description": "some extend for formik",
+  "name": "peacetrue-authentication",
+  "version": "0.0.2",
+  "description": "authentication",
   "files": [
     "dist"
   ],
   "main": "dist/index.js",
+  "dependencies": {
+    "peacetrue-httpclient": "^0.0.5"
+  },
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"

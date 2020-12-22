@@ -1,12 +1,20 @@
 {
   "name": "peacetrue-yup",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "some extend for yup",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
-    "yup": "^0.28.3"
+    "yup": "^0.28.3",
+    "peacetrue-httpclient": "^0.0.4"
+  },
+  "devDependencies": {
+    "@types/yup": "^0.28.0"
   },
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "xiayx",

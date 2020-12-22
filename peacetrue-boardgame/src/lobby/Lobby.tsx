@@ -9,11 +9,9 @@ import {Backdrop, CircularProgress, StandardProps, Theme} from "@material-ui/cor
 import {withStyles} from "@material-ui/styles";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import {GameComb, GameInfo} from "../boardgame-types";
-import Game from "./Game";
+import {GameComb} from "../boardgame-types";
 import Queue from "./Queue";
 import GameOver from "../board/GameOver";
-import {extract} from "../utils";
 
 /*
 * 用于处理用户玩单个游戏的整个过程
@@ -33,6 +31,8 @@ export interface LobbyProps extends StandardProps<React.HTMLAttributes<HTMLDivEl
     game: GameComb,
     /** 房间 */
     room: PropTypes.ReactComponentLike,
+    /** 认证信息 */
+    authentication?: any
 }
 
 export const lobbyDefaults: LobbyProps = {
@@ -47,22 +47,28 @@ export interface Lobby {
 }
 
 //TODO 参数展开式如何标记为可选
-const getParams = ({userId = 'user', roomId = 'roomId'}: { userId?: string, roomId?: string })
-    : { userId: string, roomId?: string } => {
+const getParams = ({roomId = 'roomId'}: { roomId?: string })
+    : { roomId: string | null } => {
     let params = new URLSearchParams(window.location.search);
-    return {userId: params.get(userId) as string, roomId: params.get(roomId) as string};
+    return {roomId: params.get(roomId)};
 }
 
 let lobby: Lobby = function Lobby(props: LobbyProps): JSX.Element {
-    let {classes, className, url, apiUrl, game, room: Room, ...other} = props;
+    let {classes, className, url, apiUrl, game, room: Room, authentication, ...other} = props;
     if (!apiUrl) apiUrl = url;
     let params = getParams({});
     let [state, setState] = useState<State>();
     let roomService = new RoomService({url: apiUrl, games: [game]});
-    let playerService = new PlayerService(roomService, game.code, params.userId);
+    let playerService = new PlayerService(roomService, game.code, authentication?.username);
 
     useEffect(() => {
-        playerService.getState().then(setState);
+        playerService.getState().then((state) => {
+            if (state.code === 'initial' && !params.roomId) {
+                playerService.createAndJoin(game.maxPlayers).then(setState);
+            } else {
+                playerService.getState().then(setState);
+            }
+        });
     }, []);
 
     //TODO 状态化呈现 vs 路由呈现，路由可以同时共存，状态化同一时刻只能存在一种
@@ -77,16 +83,12 @@ let lobby: Lobby = function Lobby(props: LobbyProps): JSX.Element {
             }).then(() => setState({code: 'initial'}));
         }
 
-        function getHandleCreateAndJoin() {
-            return () => playerService.createAndJoin(game.maxPlayers).then(setState);
-        }
-
         switch (state?.code) {
             case undefined:
                 return (
-                    <Backdrop className={classes?.loading} open={true}>
-                        <CircularProgress color="inherit"/>
-                    </Backdrop>
+                    // <Backdrop className={classes?.loading} open={true}>
+                        <CircularProgress color="inherit" />
+                    // </Backdrop>
                 );
             case 'initial':
                 if (params.roomId) {
@@ -94,20 +96,14 @@ let lobby: Lobby = function Lobby(props: LobbyProps): JSX.Element {
                     return (
                         <Queue
                             game={game}
-                            currentPlayer={{name: params.userId}}
+                            currentPlayer={{name: authentication?.username}}
                             getRoom={() => roomService.get({gameName: game.code, roomId: roomId})}
                             handleJoin={(player) => playerService.join(roomId, player.id)}
                             handleAllJoined={(credentials) => setState({code: 'playing', credentials})}
                         />
                     );
                 }
-                //
-                return (
-                    <Game {...extract(game, ['code', 'desc', 'logo', 'intro', 'detail']) as GameInfo}
-                          handleCreateRoom={getHandleCreateAndJoin()}
-                          handleJoinRoom={() => playerService.start(game.maxPlayers).then(setState)}
-                    />
-                );
+                throw new Error('unknown state');
             case "waiting":
                 let credentials = state.credentials as Credentials;
                 return (
@@ -124,12 +120,13 @@ let lobby: Lobby = function Lobby(props: LobbyProps): JSX.Element {
                 let TicTacToe = Client({
                     game: game,
                     board: (props: any) => {
+                        console.info("boardgame.io:", props);
                         let {ctx: {gameover}} = props;
                         let gameOver = !gameover ? undefined :
                             <GameOver isDraw={gameover.isDraw} winner={gameover.winner}
                                       currentPlayer={{id: credentials1.playerId, name: credentials1.playerName}}
                                       handleLeave={getHandleLeave(credentials1)}
-                                      handleOnceAgain={getHandleCreateAndJoin()}
+                                      handleOnceAgain={() => playerService.playAgainAndJoin(credentials1).then(setState)}
                             />;
                         return <Room {...props} gameOver={gameOver}/>;
                     },

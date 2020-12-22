@@ -15,6 +15,7 @@
 .settings/*
 /indexes/*
 /target/*
+/dist/*
 /docs/local
 /datalogs
 /data

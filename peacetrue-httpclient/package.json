@@ -1,11 +1,10 @@
 {
   "name": "peacetrue-httpclient",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "HttpClient and HttpClientProxy",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "dependencies": {
-    "@types/qs": "^6.9.1",
     "qs": "^6.9.1"
   },
   "scripts": {
@@ -27,6 +26,7 @@
     "ts-jest": "^25.4.0",
     "typescript": "^3.8.3",
     "@types/mockjs": "^1.0.2",
-    "mockjs": "^1.1.0"
+    "mockjs": "^1.1.0",
+    "@types/qs": "^6.9.1"
   }
 }

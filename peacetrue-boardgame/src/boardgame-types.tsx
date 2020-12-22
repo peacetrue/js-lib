@@ -1,10 +1,10 @@
 import {ObjectLike} from './common-types'
-import {Game} from "boardgame.io";
+import {Game as Game} from "boardgame.io";
 
 export interface G extends ObjectLike<any> {
 }
 
-/**游戏结束*/
+/** 游戏结束 */
 export interface GameOver extends ObjectLike<any> {
     /**是否和棋*/
     isDraw: boolean,
@@ -34,7 +34,7 @@ export interface GameInfo {
 }
 
 /** 游戏综合信息 */
-export interface GameComb extends Game<G>, GameInfo, GameConfig, ObjectLike<any> {
+export interface GameComb extends Game, GameInfo, GameConfig, ObjectLike<any> {
 
 }
 

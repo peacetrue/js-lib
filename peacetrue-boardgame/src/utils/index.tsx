@@ -72,6 +72,7 @@ function _isContinuous(items: Array<number>): boolean {
 
 /**查找胜利的玩家*/
 export function findVictoryPlayer(cells: Array<Cell>, boundary: Boundary, count: number): string | null {
+    if (1 === 1) return '0';
 
     // 单元格按归属玩家分组
     let ownerLocations = groupBy<Cell, Location>(cells,
