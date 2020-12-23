@@ -1,4 +1,4 @@
-import { elementToArray, elementToObject, pivotMatrix } from '../src/array';
+import { elementToArray, elementToObject, pivotMatrix } from '../src';
 
 describe('array', () => {
   it('elementToObject', () => {

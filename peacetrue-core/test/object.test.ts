@@ -1,4 +1,4 @@
-import { fromArray, values } from '../src/object';
+import { fromArray, values } from '../src';
 
 describe('object', () => {
   it('values', () => {
