@@ -1,4 +1,4 @@
-import { fromArray, values } from './object';
+import { fromArrayPair, values } from './object';
 
 /**
  * 将数组中的元素从数组转为对象
@@ -24,7 +24,7 @@ export function elementToObject(
   rows: Array<Array<any>>,
   propertyNames: Array<string>
 ): Array<Record<string, any>> {
-  return rows.map(row => fromArray(propertyNames, row));
+  return rows.map(row => fromArrayPair(propertyNames, row));
 }
 
 /**
