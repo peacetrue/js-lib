@@ -18,7 +18,7 @@ import { fromArray, values } from './object';
  * @param rows 元素都是数组的数组
  * @param propertyNames 对象属性名数组
  * @return 元素都是对象的数组
- * @since 2.0.0
+ * @since 0.0.1
  */
 export function elementToObject(
   rows: Array<Array<any>>,
@@ -45,7 +45,7 @@ export function elementToObject(
  * @param rows 元素都是对象的数组
  * @param propertyNames 对象属性名数组
  * @return 元素都是数组的数组
- * @since 2.0.0
+ * @since 0.0.1
  */
 export function elementToArray(
   rows: Array<Record<string, any>>,
@@ -55,7 +55,24 @@ export function elementToArray(
 }
 
 /**
- * 矩阵沿顶角翻转
+ * 沿顶角翻转二维数组(表格)，通俗说成行列转换
+ *
+ * 例如：
+ * ```typescript
+ * let persons = [
+ *  ['姓名', '年龄'],
+ *  ['张三', 18],
+ *  ['李四', 19],
+ * ];
+ * let pivotedPersons = [
+ *  ['姓名', '张三', '李四'],
+ *  ['年龄', 18, 19],
+ * ];
+ * pivotMatrix(persons) = pivotedPersons
+ * ```
+ * @param rows 二维数组
+ * @return 翻转后的二维数组
+ * @since 0.0.1
  */
 export function pivotMatrix(rows: Array<Array<any>>): Array<Array<any>> {
   let pivotedRows: Array<Array<any>> = [];

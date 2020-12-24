@@ -9,7 +9,7 @@
  * @param object 想要获取哪个对象的属性值
  * @param propertyNames 想要获取哪些属性的值
  * @return 想要的属性值数组
- * @since 2.0.0
+ * @since 0.0.1
  */
 export function values(
   object: Record<string, any>,
@@ -31,7 +31,7 @@ export function values(
  * @param names 属性名数组
  * @param values 属性值数组
  * @return 想要构建的对象
- * @since 2.0.0
+ * @since 0.0.1
  */
 export function fromArray(
   names: Array<string>,
