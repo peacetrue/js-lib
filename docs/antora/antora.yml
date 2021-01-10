@@ -1,0 +1,9 @@
+name: peacetrue-js
+title: JavaScript 扩展
+version: master
+asciidoc:
+  attributes:
+    numbered: ''
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

@@ -1,0 +1,16 @@
+= JavaScript 类库
+
+== 参考
+
+* https://www.lodashjs.com/
+* http://es6.ruanyifeng.com/
+* https://webpack.js.org/guides/output-management/
+* https://webpack.js.org/configuration/devtool/
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+
+== 分类
+
+* peacetrue-core：基础工具类库
+* peacetrue-react-admin：react-admin 扩展类库
+
+
