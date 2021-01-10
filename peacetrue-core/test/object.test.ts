@@ -1,4 +1,4 @@
-import { fromArray, fromArrayPair, values } from '../src';
+import { convertPropertyValue, fromArray, fromArrayPair, values } from '../src';
 
 describe('object', () => {
   it('values', () => {
@@ -20,6 +20,20 @@ describe('object', () => {
       name: '张三',
       sex: '男',
       age: 18,
+    });
+  });
+
+  it('convertPropertyValue', () => {
+    /* tslint:disable:no-unused-variable */
+    expect(
+      convertPropertyValue(
+        { name: '张三', sex: '男', age: 18 },
+        (name, value) => name.toString() + value
+      )
+    ).toEqual({
+      name: 'name张三',
+      sex: 'sex男',
+      age: 'age18',
     });
   });
 });

@@ -59,3 +59,33 @@ export function fromArrayPair(
 ): Record<string, any> {
   return Object.fromEntries(names.map((name, index) => [name, values[index]]));
 }
+
+export type PropertyNameType = keyof any;
+
+/**
+ * 转换属性值
+ *
+ * 例如：
+ * ```
+ * convertPropertyValue({name: '张三', sex: '男', age: 18}, (name, value) => name + value) = {name: 'name张三', sex: 'sex男', age: 'age18'}
+ * ```
+ *
+ * @param data 待转换的对象
+ * @param converter 转换器
+ * @param matcher 匹配器
+ * @return 转换后的对象
+ * @since 0.0.1
+ */
+export function convertPropertyValue(
+  data: Record<string, any>,
+  converter: (name: string, value: any) => any,
+  matcher: (name: string, value: any) => boolean = () => true
+) {
+  data = { ...data };
+  for (let name in data) {
+    if (!data.hasOwnProperty(name)) continue;
+    let value = data[name];
+    if (matcher(name, value)) data[name] = converter(name, value);
+  }
+  return data;
+}
