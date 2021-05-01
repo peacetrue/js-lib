@@ -11,10 +11,10 @@
  * @return 想要的属性值数组
  * @since 0.0.1
  */
-export function values(
-  object: Record<string, any>,
+export function values<T extends any = any>(
+  object: Record<string, T>,
   propertyNames: Array<string>
-): Array<any> {
+): Array<T> {
   return propertyNames.map(key => object[key]);
 }
 
@@ -31,10 +31,10 @@ export function values(
  * @return 想要构建的对象
  * @since 0.0.1
  */
-export function fromArray(
+export function fromArray<T>(
   names: Array<string>,
-  value: any
-): Record<string, any> {
+  value: T
+): Record<string, T> {
   return Object.fromEntries(names.map(name => [name, value]));
 }
 
@@ -60,7 +60,22 @@ export function fromArrayPair(
   return Object.fromEntries(names.map((name, index) => [name, values[index]]));
 }
 
-export type PropertyNameType = keyof any;
+
+/**
+ * 构建对象的一部分
+ *
+ * 例如：
+ * ```
+ * fromPartial({name: '张三', sex: '男', age: 18},['name', 'sex']) = {name: '张三', sex: '男'}
+ * ```
+ * @since 0.0.1
+ */
+export function fromPartial<T = any>(
+  object: Record<string, T>,
+  fields: Array<string>
+): Record<string, T> {
+  return Object.fromEntries(fields.map((name) => [name, object[name]]));
+}
 
 /**
  * 转换属性值
@@ -81,7 +96,7 @@ export function convertPropertyValue(
   converter: (name: string, value: any) => any,
   matcher: (name: string, value: any) => boolean = () => true
 ) {
-  data = { ...data };
+  data = {...data};
   for (let name in data) {
     if (!data.hasOwnProperty(name)) continue;
     let value = data[name];
