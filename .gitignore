@@ -25,4 +25,5 @@
 /local/*
 /dataSources/*
 rebel.xml
-node_modules
+**/node_modules
+**/yarn.lock
